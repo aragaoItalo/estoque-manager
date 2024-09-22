@@ -16,6 +16,7 @@
     "express": "^4.21.0",
     "firebase-admin": "^12.5.0",
     "mysql2": "^3.11.3",
+    "sequelize": "^6.37.3",
     "stripe": "^16.12.0"
   }
 }
