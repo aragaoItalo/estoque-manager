@@ -2,6 +2,7 @@
 require('dotenv').config({ path: '../../.env' });
 
 
+//TESTE DAS CREDENCIAIS
 console.log('DB_USER:', process.env.DB_USER);
 console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
 console.log('DB_NAME:', process.env.DB_NAME);
@@ -19,7 +20,7 @@ const sequelize = new Sequelize (process.env.DB_NAME, process.env.DB_USER, proce
 //Teste da conexão
 sequelize.authenticate()
     .then(() => {
-        console.log('Conectado ao MSQL usando o Sequelize');
+        console.log('Conectado ao MySQL usando o Sequelize');
     })
     .catch(err => {
         console.log('Não é possível conectar ao database: ', err);
