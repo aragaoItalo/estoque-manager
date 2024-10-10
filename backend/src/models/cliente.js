@@ -70,7 +70,7 @@ const Cliente = sequelize.define('Cliente', {
 });
 
 
-//METODO QUE VERIFICA A SENHA (COMPARA A INSERIDA PELO USER COM A CRIPTOGRAFDADA)
+//METODO QUE VERIFICA A SENHA (COMPARA A INSERIDA PELO USER COM A CRIPTOGRAFADA)
 Cliente.prototype.validPassword = async function(senha) {
     return await bcrypt.compare(senha, this.senha);
 };
