@@ -1,6 +1,7 @@
+//Carregar variaveis de ambiente
 require('dotenv').config();
 
-
+//Import Pacotes e Módulos
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./src/config/db.js');
@@ -14,18 +15,26 @@ const itemCarrinho = require('./src/models/itemCarrinho.js');
 const Pagamento = require('./src/models/pagamento.js');
 const Notificacao = require('./src/models/notificacao.js');
 
+//Import routes
+const clienteRoutes = require('./src/routes/clienteRoutes.js');
+const produtoRoutes = require('./src/routes/produtoRoutes.js');
 
+//Config Express
 const app = express();
 const port = process.env.PORT || 3000;
 
-
+//Middlewares
 app.use(cors());
 app.use(express.json());
+app.use('/clientes', clienteRoutes);
+app.use('/produtos', produtoRoutes);
 
+//Rota Simples p teste do server
 app.get('/', (req, res) => {
     res.send('Servidor funcionando!');
 });
 
+//Inicialização do server
 app.listen(port, () => {
     console.log(`Servidor está rodando na porta ${port}`);
 });
