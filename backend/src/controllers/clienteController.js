@@ -11,7 +11,7 @@ exports.createCliente = async (req, res) => {
 };
 
 //Lista os clientes
-exports.getAllClientes = async (res, res) => {
+exports.getAllClientes = async (req, res) => {
     try {
         const clientes = await Cliente.findAll();
         res.status(200).json(clientes);
@@ -23,7 +23,7 @@ exports.getAllClientes = async (res, res) => {
 //Busca pelo id
 exports.getClienteById = async (req, res) => {
     try  {
-        const cliente = await Cliente.findByPk(res.params.id);
+        const cliente = await Cliente.findByPk(req.params.id);
         if (!cliente) {
             return res.status(404).json({ error: 'Cliente não encontrado' });
         }
@@ -48,7 +48,7 @@ exports.updateCliente = async (req, res) => {
 };
 
 //Deleta pelo id
-xports.deleteCliente = async (req, res) => {
+exports.deleteCliente = async (req, res) => {
     try {
         const cliente = await Cliente.findByPk(req.params.id);
         if (!cliente) {

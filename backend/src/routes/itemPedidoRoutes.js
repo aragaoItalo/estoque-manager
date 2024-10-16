@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 const itemPedidoController = require('../controllers/itemPedidoController');
 
 router.post('/:pedidoId', itemPedidoController.addItemToPedido);
