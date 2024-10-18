@@ -5,6 +5,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./src/config/db.js');
+const authRoutes = require('./src/routes/authRoutes');
 const Cliente = require('./src/models/cliente.js');
 const Fornecedor = require('./src/models/fornecedor.js');
 const Produto = require('./src/models/produto.js');
@@ -26,6 +27,7 @@ const port = process.env.PORT || 3000;
 //Middlewares
 app.use(cors());
 app.use(express.json());
+app.use('/auth', authRoutes);
 app.use('/clientes', clienteRoutes);
 app.use('/produtos', produtoRoutes);
 
