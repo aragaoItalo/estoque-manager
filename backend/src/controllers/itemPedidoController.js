@@ -65,4 +65,45 @@ exports.getItemPedidoById = async (req, res) => {
 };
 
 //Atualiza item do pedido
+exports.updateItemPedido = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { produtoId, quantidade, precoUnitario, pedidoId } = req.body;
+  
+      const itemPedido = await ItemPedido.findByPk(id);
+  
+      if (!itemPedido) {
+        return res.status(404).json({ message: 'Item de pedido não encontrado' });
+      }
+  
+      // Atualiza os campos 
+      itemPedido.produtoId = produtoId;
+      itemPedido.quantidade = quantidade;
+      itemPedido.precoUnitario = precoUnitario;
+      itemPedido.pedidoId = pedidoId;
+  
+      await itemPedido.save();
+  
+      res.status(200).json(itemPedido);
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao atualizar item de pedido', error });
+    }
+  };
+  
 //Deleta item do pedido
+  exports.deleteItemPedido = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const itemPedido = await ItemPedido.findByPk(id);
+  
+      if (!itemPedido) {
+        return res.status(404).json({ message: 'Item de pedido não encontrado' });
+      }
+  
+      await itemPedido.destroy();
+  
+      res.status(200).json({ message: 'Item de pedido deletado com sucesso' });
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao deletar item de pedido', error });
+    }
+  };
