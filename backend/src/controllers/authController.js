@@ -12,9 +12,9 @@ exports.signup = async (req, res) => {
         if (clienteExistente) {
             return res.status(400).json({ error: 'E-mail já está registrado' });
         }
-        
+        console.log('Iniciando o hash da senha...');
         const hashedPassword = await bcrypt.hash(senha, 10);
-
+        console.log('Hash da senha concluído:', hashedPassword);
         // Criar o cliente no banco de dados
         const novoCliente = await Cliente.create({
             nome,
@@ -24,7 +24,7 @@ exports.signup = async (req, res) => {
 
         res.status(201).json({ message: 'Cliente registrado com sucesso', clienteId: novoCliente.id });
     } catch (error) {
-        console.error(error);
+        console.error('Erro ao registrar cliente:', error);
         res.status(500).json({ error: 'Erro ao registrar cliente' });
     }
 };
