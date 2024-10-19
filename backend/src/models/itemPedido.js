@@ -17,10 +17,12 @@ const ItemPedido = sequelize.define('ItemPedido', {
 
 // RELACIONAMENTOS
 ItemPedido.belongsTo(Pedido, {
-    foreignKey: 'pedidoId'
+    foreignKey: 'pedidoId',
+    onDelete: 'CASCADE'
 });
 ItemPedido.belongsTo(Produto, { 
-    foreignKey: 'produtoId'
+    foreignKey: 'produtoId',
+    onDelete: 'CASCADE'
 });
 
 
