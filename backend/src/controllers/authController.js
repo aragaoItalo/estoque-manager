@@ -39,11 +39,13 @@ exports.signin = async (req, res) => {
         if (!cliente) {
             return res.status(400).json({ error: 'E-mail ou senha inválidos' });
         }
+
         // Comparar senhas
         const senhaCorreta = await bcrypt.compare(senha, cliente.senha);
         if (!senhaCorreta) {
             return res.status(400).json({ error: 'E-mail ou senha inválidos' });
         }
+        
         // Gerar token JWT -> Usado para autenticação
         const token = jwt.sign(
             { id: cliente.id, email: cliente.email },
