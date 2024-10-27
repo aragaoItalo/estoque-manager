@@ -4,7 +4,14 @@ const Cliente = require('../models/cliente');
 
 //Registra cliente (SIGNUP)
 exports.signup = async (req, res) => {
-    const { nome, email, senha } = req.body;
+    const { nome, email, senha, endereco, telefone } = req.body;
+
+
+    // Verifica se todos os campos obrigatórios estão presentes
+    if (!nome || !email || !senha || !endereco || !telefone) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+    }
+
 
     try {
         // Verifica se o cliente já está registrado
@@ -21,7 +28,9 @@ exports.signup = async (req, res) => {
         const novoCliente = await Cliente.create({
             nome,
             email,
-            senha: hashedPassword
+            senha: hashedPassword,
+            endereco,
+            telefone
         });
 
         res.status(201).json({ message: 'Cliente registrado com sucesso', clienteId: novoCliente.id });
@@ -34,6 +43,13 @@ exports.signup = async (req, res) => {
 // Login do cliente (SIGNIN)
 exports.signin = async (req, res) => {
     const { email, senha } = req.body;
+
+    
+    // Verifica se todos os campos obrigatórios estão presentes
+    if (!email || !senha) {
+        return res.status(400).json({ error: 'E-mail e senha são obrigatórios' });
+    }
+
 
     try {
         // Verifica se o cliente existe
