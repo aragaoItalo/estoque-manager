@@ -12,6 +12,11 @@ exports.signup = async (req, res) => {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
     }
 
+    
+    if (senha.length < 6 || senha.length > 30) {
+        return res.status(400).json({ error: 'A senha deve ter entre 6 e 30 caracteres.' });
+    }
+
 
     try {
         // Verifica se o cliente já está registrado
@@ -21,14 +26,14 @@ exports.signup = async (req, res) => {
         }
         
         //console.log('Iniciando o hash da senha...');
-        const hashedPassword = await bcrypt.hash(senha, 10);
+        //const hashedPassword = await bcrypt.hash(senha, 10);
         //console.log('Hash da senha concluído:', hashedPassword);
 
         // Criar o cliente no banco de dados
         const novoCliente = await Cliente.create({
             nome,
             email,
-            senha: hashedPassword,
+            senha,
             endereco,
             telefone
         });
@@ -44,7 +49,7 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
     const { email, senha } = req.body;
 
-    
+
     // Verifica se todos os campos obrigatórios estão presentes
     if (!email || !senha) {
         return res.status(400).json({ error: 'E-mail e senha são obrigatórios' });
