@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import './Login.css';
 
 const Login = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate(); // Criar uma instância do useNavigate
+    const navigate = useNavigate();
 
     const handleEmailLogin = async (e) => {
         e.preventDefault();
-        const trimmedEmail = username.trim();
+        const trimmedEmail = email.trim();
         const trimmedPassword = password.trim();
 
         if (!trimmedEmail || !trimmedPassword) {
@@ -20,7 +20,7 @@ const Login = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/api/auth/signin', { //endpoint de login do backend
+            const response = await fetch('http://localhost:3000/auth/signin', { //endpoint de login do backend
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const Login = () => {
                         <input 
                             type="email" 
                             placeholder="Usuário" 
-                            onChange={(e) => setUsername(e.target.value)} 
+                            onChange={(e) => setEmail(e.target.value)} 
                             required 
                         />
                     </div>
@@ -75,9 +75,8 @@ const Login = () => {
                 </div>
             </div>
             <div className="stock-Image">
-                <img src="src\assets\proIMG.png" alt="Stock&Cash" />
-            </div>
-            
+                <img src="src/assets/proIMG.png" alt="Stock&Cash" />
+            </div>          
         </div>
     );
 };

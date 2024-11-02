@@ -2,8 +2,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './Components/Login/Login';
-import Register from './Components/Register/register';
-import Dashboard from './Components/Dashboard/dashboard'; // Importar o componente Dashboard
+import Register from './Components/Register/Register';
+import Dashboard from './Components/Dashboard/Dashboard'; // Importar o componente Dashboard
 
 const App = () => {
     return (
