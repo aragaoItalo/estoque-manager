@@ -4,16 +4,15 @@ const Cliente = require('../models/cliente');
 
 //Registra cliente (SIGNUP)
 exports.signup = async (req, res) => {
-    const { nome, email, senha, endereco, telefone } = req.body;
-
+    const { firstName, lastName, email, storeName, password } = req.body;
 
     // Verifica se todos os campos obrigatórios estão presentes
-    if (!nome || !email || !senha || !endereco || !telefone) {
+    if (!firstName || !lastName || !email || !storeName || !password) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
     }
 
-    
-    if (senha.length < 6 || senha.length > 30) {
+    // Verifica o comprimento da senha
+    if (password.length < 6 || password.length > 30) {
         return res.status(400).json({ error: 'A senha deve ter entre 6 e 30 caracteres.' });
     }
 
@@ -31,11 +30,10 @@ exports.signup = async (req, res) => {
 
         // Criar o cliente no banco de dados
         const novoCliente = await Cliente.create({
-            nome,
+            nome: `${firstName} ${lastName}`,
             email,
-            senha,
-            endereco,
-            telefone
+            senha: password,
+            nomeLoja: storeName,
         });
 
         res.status(201).json({ message: 'Cliente registrado com sucesso', clienteId: novoCliente.id });
@@ -47,11 +45,11 @@ exports.signup = async (req, res) => {
 
 // Login do cliente (SIGNIN)
 exports.signin = async (req, res) => {
-    const { email, senha } = req.body;
+    const { email, password } = req.body;
 
 
     // Verifica se todos os campos obrigatórios estão presentes
-    if (!email || !senha) {
+    if (!email || !password) {
         return res.status(400).json({ error: 'E-mail e senha são obrigatórios' });
     }
 
@@ -64,7 +62,7 @@ exports.signin = async (req, res) => {
         }
 
         // Comparar senhas
-        const senhaCorreta = await bcrypt.compare(senha, cliente.senha);
+        const senhaCorreta = await bcrypt.compare(password, cliente.senha);
         if (!senhaCorreta) {
             return res.status(400).json({ error: 'E-mail ou senha inválidos' });
         }
