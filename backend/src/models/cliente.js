@@ -26,7 +26,7 @@ const Cliente = sequelize.define('Cliente', {
             notEmpty: true
         }
     },
-    senha: {
+    password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -43,7 +43,7 @@ const Cliente = sequelize.define('Cliente', {
         validate: {
             notEmpty: true
         }
-    },
+    }/*,
     endereco: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -65,19 +65,19 @@ const Cliente = sequelize.define('Cliente', {
             },
             notEmpty: true
         }
-    }
+    }*/
 }, { 
     hooks: {
         //ESSE HOOK CRIPTOGRAFA A SENHA ANTES DE SALVAR
         beforeCreate: async (cliente) => {
             const salt = await bcrypt.genSalt(10);
-            cliente.senha = await bcrypt.hash(cliente.senha, salt);
+            cliente.password = await bcrypt.hash(cliente.password, salt);
         },
         //ESSE HOOK CRIPTOGRAFA A SENHA CASO SEJA ATUALIZADA 
         beforeUpdate: async (cliente) => {
-            if (cliente.changed('senha')) {
+            if (cliente.changed('password')) {
                 const salt = await bcrypt.genSalt(10);
-                cliente.senha = await bcrypt.hash(cliente.senha, salt);
+                cliente.password = await bcrypt.hash(cliente.password, salt);
             }
         }
     }    
@@ -85,8 +85,8 @@ const Cliente = sequelize.define('Cliente', {
 
 
 //METODO QUE VERIFICA A SENHA (COMPARA A INSERIDA PELO USER COM A CRIPTOGRAFADA)
-Cliente.prototype.validPassword = async function(senha) {
-    return await bcrypt.compare(senha, this.senha);
+Cliente.prototype.validPassword = async function(password) {
+    return await bcrypt.compare(password, this.password);
 };
 
 

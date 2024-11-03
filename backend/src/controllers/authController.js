@@ -30,10 +30,11 @@ exports.signup = async (req, res) => {
 
         // Criar o cliente no banco de dados
         const novoCliente = await Cliente.create({
-            nome: `${firstName} ${lastName}`,
+            firstName,
+            lastName,
             email,
-            senha: password,
-            nomeLoja: storeName,
+            password,
+            storeName,
         });
 
         res.status(201).json({ message: 'Cliente registrado com sucesso', clienteId: novoCliente.id });
@@ -62,7 +63,7 @@ exports.signin = async (req, res) => {
         }
 
         // Comparar senhas
-        const senhaCorreta = await bcrypt.compare(password, cliente.senha);
+        const senhaCorreta = await bcrypt.compare(password, cliente.password);
         if (!senhaCorreta) {
             return res.status(400).json({ error: 'E-mail ou senha inválidos' });
         }
