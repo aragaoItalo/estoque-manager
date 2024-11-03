@@ -3,11 +3,18 @@ const bcrypt = require('bcrypt');
 const sequelize = require('../config/db');
 
 const Cliente = sequelize.define('Cliente', {
-    nome: {
+    firstName: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            notEmpty: true //Aqui verificamos se o campo está vazio.
+            notEmpty: true
+        }
+    },
+    lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true
         }
     },
     email: {
@@ -27,6 +34,13 @@ const Cliente = sequelize.define('Cliente', {
                 args: [6, 30], //Min e Máx
                 msg: "A senha deve ter entre 6 e 30 caracteres."
             },
+            notEmpty: true
+        }
+    },
+    storeName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
             notEmpty: true
         }
     },
